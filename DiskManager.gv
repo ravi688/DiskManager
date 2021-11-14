@@ -1,0 +1,15 @@
+#pragma once
+
+digraph DiskManager
+{
+	#define digraph subgraph
+	#include <BufferLib.gv>
+	#undef digraph
+
+	#define digraph subgraph
+	#include <CallTrace.gv>
+	#undef digraph
+
+	BufferLib -> DiskManager;
+	CallTrace -> DiskManager;
+} 
