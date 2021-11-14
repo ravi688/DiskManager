@@ -15,11 +15,11 @@ PROJECT_NAME = DiskManager
 STATIC_LIB_NAME = diskmanager.a
 DYNAMIC_LIB_NAME = #diskmanager.dll
 EXECUTABLE_NAME = main.exe
-DEPENDENCIES = BufferLib
-DEPENDENCY_LIBS = BufferLib/lib/bufferlib.a
+DEPENDENCIES = ../../BufferLib ../../BufferLib/dependencies/CallTrace
+DEPENDENCY_LIBS = ../../BufferLib/lib/bufferlib.a ../../BufferLib/dependencies/CallTrace/lib/calltrace.a
 DEPENDENCIES_DIR = ./dependencies
-SHARED_DEPENDENCIES = CallTrace
-SHARED_DEPENDENCY_LIBS = CallTrace/lib/calltrace.a
+SHARED_DEPENDENCIES = 
+SHARED_DEPENDENCY_LIBS = 
 SHARED_DEPENDENCIES_DIR = ./shared-dependencies
 #-------------------------------------------
 
@@ -176,8 +176,8 @@ bin-clean:
 	del $(subst /,\, $(TARGET_STATIC_LIB))
 	rmdir $(subst /,\, $(TARGET_STATIC_LIB_DIR))
 	@echo [Log] Binaries cleaned successfully!
-	$(MAKE) --directory=./dependencies/BufferLib clean
-	$(MAKE) --directory=./shared-dependencies/CallTrace clean
+	$(MAKE) --directory=./dependencies/../../BufferLib clean
+	$(MAKE) --directory=./dependencies/../../BufferLib/dependencies/CallTrace clean
 # 	$(MAKE) --directory=./dependencies/HPML clean
 # 	$(MAKE) --directory=../../shared-dependencies/BufferLib clean
 #  	$(MAKE) --directory=./dependencies/tgc clean
