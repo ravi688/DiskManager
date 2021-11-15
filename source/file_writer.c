@@ -41,7 +41,7 @@ function_signature(void, write_binary_to_file, const char* file_name, const char
 		LOG_FETAL_ERR("Opening file \"%s\" failed\n", file_name);
 	}
 	u64 bytes_written = fwrite(data, sizeof(char), length, file);
-	if(bytes_written == length)
+	if(bytes_written != length)
 	{
 		LOG_FETAL_ERR("Writing to file \"%s\" failed\n", file_name);
 	}
