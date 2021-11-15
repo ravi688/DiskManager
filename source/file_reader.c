@@ -1,5 +1,6 @@
 
 #include <disk_manager/file_reader.h>
+#include <disk_manager/assert.h>
 #include <buffer.h>
 #include <string.h>
 #include <stdio.h>
@@ -26,8 +27,7 @@ function_signature(static BUFFER*, load_file, const char* file_name, const char*
 	FILE* file = fopen(file_name, mode);
 	if(file == NULL) 
 	{
-		log_err("File \"%s\" loading failed\n", file_name);
-		return NULL;; 
+		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	}
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
 	char ch = getc(file); 
@@ -47,8 +47,7 @@ function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* fi
 	FILE* file = fopen(file_name, "r"); 
 	if(file == NULL)
 	{
-		log_err("File \"%s\" loading failed\n", file_name);
-		return NULL;; 
+		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	}
 
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
