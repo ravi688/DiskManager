@@ -30,11 +30,10 @@ function_signature(static BUFFER*, load_file, const char* file_name, const char*
 		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	}
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
-	char ch = getc(file); 
-	while(ch != EOF)
+	while(!feof(file))
 	{
+		char ch = getc(file);
 		buf_push(memory_buffer, &ch); 
-		ch = getc(file); 
 	}
 	fclose(file);
 	buf_fit(memory_buffer);
