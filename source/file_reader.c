@@ -35,6 +35,8 @@ function_signature(static BUFFER*, load_file, const char* file_name, const char*
 		char ch = getc(file);
 		buf_push(memory_buffer, &ch); 
 	}
+	char v = 0;
+	buf_push(memory_buffer, &v);
 	fclose(file);
 	buf_fit(memory_buffer);
 	CALLTRACE_RETURN(memory_buffer);
