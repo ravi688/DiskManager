@@ -6,26 +6,33 @@
 #include <stdio.h>
 #include <conio.h>
 
-function_signature(static BUFFER*, load_file, const char* file_name, const char* mode);
-#define load_file(...) define_alias_function_macro(load_file, __VA_ARGS__)
 
 function_signature(BUFFER*, load_binary_from_file, const char* file_name)
 {
 	CALLTRACE_BEGIN();
-	CALLTRACE_RETURN(load_file(file_name, "rb"));
+	FILE* file = fopen(file_name, "rb");
+	if(file == NULL)
+	{
+		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
+	}
+	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
+	fseek(file, 0L, SEEK_END);
+	u64 length = ftell(file);
+	rewind(file);
+	buf_resize(memory_buffer, length);
+	u64 read_length = fread(memory_buffer->bytes, sizeof(char), length, file);
+	ASSERT(length == read_length, "length != read_length\n");
+	buf_set_element_count(memory_buffer, read_length);
+	fclose(file);
+	buf_fit(memory_buffer);
+	CALLTRACE_RETURN(memory_buffer);
 }
 
 function_signature(BUFFER*, load_text_from_file, const char* file_name)
 {
 	CALLTRACE_BEGIN();
- 	CALLTRACE_RETURN(load_file(file_name, "r"));
-}
-
-function_signature(static BUFFER*, load_file, const char* file_name, const char* mode)
-{
-	CALLTRACE_BEGIN();
-	FILE* file = fopen(file_name, mode);
-	if(file == NULL) 
+	FILE* file = fopen(file_name, "r");
+	if(file == NULL)
 	{
 		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	}
@@ -33,10 +40,8 @@ function_signature(static BUFFER*, load_file, const char* file_name, const char*
 	while(!feof(file))
 	{
 		char ch = getc(file);
-		buf_push(memory_buffer, &ch); 
+		buf_push(memory_buffer, &ch);
 	}
-	char v = 0;
-	buf_push(memory_buffer, &v);
 	fclose(file);
 	buf_fit(memory_buffer);
 	CALLTRACE_RETURN(memory_buffer);
