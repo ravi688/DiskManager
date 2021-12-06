@@ -1,6 +1,9 @@
 
+//for printf, and puts
 #include <stdio.h>
+//for write_text_to_file
 #include <disk_manager/file_reader.h>
+//for load_binary_from_file and load_text_from_file
 #include <disk_manager/file_writer.h>
 
 int main(int argc, char** argv)

@@ -1,8 +1,10 @@
 
 #include <disk_manager/file_writer.h>
+//for u64
 #include <disk_manager/defines.h>
+//for LOG_FETAL_ERR
 #include <disk_manager/assert.h>
-#include <stdbool.h>
+//for fopen, fclose, putc, and fwrite
 #include <stdio.h>
 
 function_signature(void, write_text_to_file, const char* file_name, const char* text)
