@@ -1,11 +1,11 @@
 
 #include <disk_manager/file_reader.h>
+//For LOG_FETAL_ERR and ASSERT
 #include <disk_manager/assert.h>
+//For buf_*
 #include <buffer.h>
-#include <string.h>
+//For getc, fread, fseek, ftell, rewind, and fclose
 #include <stdio.h>
-#include <conio.h>
-
 
 function_signature(BUFFER*, load_binary_from_file, const char* file_name)
 {
