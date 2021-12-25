@@ -1,13 +1,20 @@
 
 #pragma once
 
-//for printf and puts
-#include <stdio.h>
-//for variable number of arguments
-#include <stdarg.h>
-//for exit
-#include <stdlib.h>
-#include <stdbool.h>
+#ifdef __cplusplus
+#	include <cstdio>
+#	include <cstdarg>
+#	include <cstdlib>
+#	include <cstdbool>
+#else
+	//for printf and puts
+#	include <stdio.h>
+	//for variable number of arguments
+#	include <stdarg.h>
+	//for exit
+#	include <stdlib.h>
+#	include <stdbool.h>
+#endif
 
 //for log_msg, log_err, log_fetal_err and calltrace_string()
 #include <calltrace/calltrace.h>
