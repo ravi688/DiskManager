@@ -5,7 +5,10 @@
 #include <calltrace/calltrace.h>
 
 //For BUFFER* 
-#include <buffer.h>
+#include <bufferlib/buffer.h>
+
+// for DISK_MANAGER_API
+#include <disk_manager/defines.h>
 
 #ifdef __cpluscplus
 extern "C" {
@@ -30,7 +33,7 @@ extern "C" {
  *		puts(file_data->bytes) or puts(buf_get_ptr())
  * 		buf_free(file_data);
  */
-function_signature(BUFFER*, load_text_from_file, const char* file_name);
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name);
 #define load_text_from_file(...) define_alias_function_macro(load_text_from_file, __VA_ARGS__)
 
 /* load_binary_from_file(const char* file_name):
@@ -52,7 +55,7 @@ function_signature(BUFFER*, load_text_from_file, const char* file_name);
  *		stl_parse_binary(file_data->bytes, file_data->element_size, &callbacks);
  *		buf_free(file_data);
  */
-function_signature(BUFFER*, load_binary_from_file, const char* file_name); 
+DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* file_name); 
 #define load_binary_from_file(...) define_alias_function_macro(load_binary_from_file, __VA_ARGS__)
 
 /* load_text_file_exclude_comments(const char* file_name)
@@ -68,7 +71,7 @@ function_signature(BUFFER*, load_binary_from_file, const char* file_name);
  * 		1. It is guaranteed that the loaded text data would be null terminated.
  * 		2. SHOULD NOT BE USED, because it is not well tested
  */
-function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name);
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name);
 #define load_text_from_file_exclude_comments(...) define_alias_function_macro(load_text_from_file_exclude_comments, __VA_ARGS__)
 
 #ifdef __cpluscplus

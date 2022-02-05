@@ -7,7 +7,7 @@
 //for fopen, fclose, putc, and fwrite
 #include <stdio.h>
 
-function_signature(void, write_text_to_file, const char* file_name, const char* text)
+DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_name, const char* text)
 {
 	CALLTRACE_BEGIN();
 	if(text == NULL)
@@ -30,7 +30,7 @@ function_signature(void, write_text_to_file, const char* file_name, const char* 
 }
 
 
-function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length)
+DISK_MANAGER_API function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length)
 {
 	CALLTRACE_BEGIN();
 	if(data == NULL)
