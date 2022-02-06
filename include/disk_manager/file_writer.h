@@ -3,7 +3,7 @@
 
 //for stack trace
 #include <calltrace/calltrace.h>
-//for u64
+//for u64 and DISK_MANAGER_API
 #include <disk_manager/defines.h>
 
 #ifdef __cplusplus
@@ -29,7 +29,7 @@ extern "C" {
  * 		const char* string = "Hello World";
  *		write_text_to_file("myFolder/file.txt", string);
  */
-function_signature(void, write_text_to_file, const char* file_name, const char* text);
+DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_name, const char* text);
 #define write_text_to_file(...) define_alias_function_macro(write_text_to_file, __VA_ARGS__)
 
 /* write_binary_to_file(const char* file_name, const char* data, u64 length)
@@ -50,7 +50,7 @@ function_signature(void, write_text_to_file, const char* file_name, const char* 
  * 		int data[100]; memset(data, 0, sizeof(int) * 100);
  * 		write_binary_to_file("myFolder/binaryFile.bin", data, sizeof(int) * 100);
  */
-function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length); 
+DISK_MANAGER_API function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length); 
 #define write_binary_to_file(...) define_alias_function_macro(write_binary_to_file, __VA_ARGS__)
 
 

@@ -3,11 +3,11 @@
 //For LOG_FETAL_ERR and ASSERT
 #include <disk_manager/assert.h>
 //For buf_*
-#include <buffer.h>
+#include <bufferlib/buffer.h>
 //For getc, fread, fseek, ftell, rewind, and fclose
 #include <stdio.h>
 
-function_signature(BUFFER*, load_binary_from_file, const char* file_name)
+DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* file_name)
 {
 	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "rb");
@@ -28,7 +28,7 @@ function_signature(BUFFER*, load_binary_from_file, const char* file_name)
 	CALLTRACE_RETURN(memory_buffer);
 }
 
-function_signature(BUFFER*, load_text_from_file, const char* file_name)
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name)
 {
 	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "r");
@@ -47,7 +47,7 @@ function_signature(BUFFER*, load_text_from_file, const char* file_name)
 	CALLTRACE_RETURN(memory_buffer);
 }
 
-function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name)
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name)
 {
 	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "r"); 
