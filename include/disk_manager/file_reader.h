@@ -36,6 +36,9 @@ extern "C" {
 DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name);
 #define load_text_from_file(...) define_alias_function_macro(load_text_from_file, __VA_ARGS__)
 
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name);
+#define load_text_from_file_s(...) define_alias_function_macro(load_text_from_file_s, __VA_ARGS__)
+
 /* load_binary_from_file(const char* file_name):
  * PARAMS:
  * 		1. file_name: file path to open
