@@ -24,7 +24,6 @@ DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_n
 		putc(*text, file);
 		++text;
 	}
-	putc(0, file);
 	fclose(file);
 	CALLTRACE_END();
 }

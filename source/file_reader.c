@@ -47,6 +47,29 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* fi
 	CALLTRACE_RETURN(memory_buffer);
 }
 
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name)
+{
+	CALLTRACE_BEGIN();
+	FILE* file = fopen(file_name, "r");
+	if(file == NULL)
+		CALLTRACE_RETURN(NULL);
+	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
+	while(!feof(file))
+	{
+		char ch = getc(file);
+		buf_push(memory_buffer, &ch);
+	}
+	fclose(file);
+	if(buf_get_element_count(memory_buffer) > 0)
+		buf_fit(memory_buffer);
+	else
+	{
+		buf_free(memory_buffer);
+		memory_buffer = NULL;
+	}
+	CALLTRACE_RETURN(memory_buffer);
+}
+
 DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name)
 {
 	CALLTRACE_BEGIN();
