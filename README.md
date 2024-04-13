@@ -1,2 +1,2 @@
-# TemplateRepository
-This repository contains template for a project in C language
+# DiskManager
+DiskManager is a wrapper and abstraction of disk file management; It can be used in cross-platform environment also
