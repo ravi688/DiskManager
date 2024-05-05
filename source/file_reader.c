@@ -37,12 +37,24 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* fi
 		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	}
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
-	while(!feof(file))
+	int result;
+	while((result = getc(file)) != EOF)
 	{
-		char ch = getc(file);
+		char ch = result;
 		buf_push(memory_buffer, &ch);
 	}
 	fclose(file);
+	if(buf_get_element_count(memory_buffer) > 0)
+	{
+		/* if null character is not appended at the end, add it explicitly */
+		char ch;
+		buf_peek(memory_buffer, &ch);
+		if(ch != 0)
+		{
+			ch = 0;
+			buf_push(memory_buffer, &ch);
+		}
+	}
 	buf_fit(memory_buffer);
 	CALLTRACE_RETURN(memory_buffer);
 }
@@ -54,14 +66,25 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* 
 	if(file == NULL)
 		CALLTRACE_RETURN(NULL);
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
-	while(!feof(file))
+	int result;
+	while((result = getc(file)) != EOF)
 	{
-		char ch = getc(file);
+		char ch = result;
 		buf_push(memory_buffer, &ch);
 	}
 	fclose(file);
 	if(buf_get_element_count(memory_buffer) > 0)
+	{
+		/* if null character is not appended at the end, add it explicitly */
+		char ch;
+		buf_peek(memory_buffer, &ch);
+		if(ch != 0)
+		{
+			ch = 0;
+			buf_push(memory_buffer, &ch);
+		}
 		buf_fit(memory_buffer);
+	}
 	else
 	{
 		buf_free(memory_buffer);
