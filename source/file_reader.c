@@ -28,14 +28,8 @@ DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* 
 	CALLTRACE_RETURN(memory_buffer);
 }
 
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name)
+static BUFFER* read_text_from_file_ptr(FILE* file)
 {
-	CALLTRACE_BEGIN();
-	FILE* file = fopen(file_name, "r");
-	if(file == NULL)
-	{
-		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
-	}
 	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
 	int result;
 	while((result = getc(file)) != EOF)
@@ -43,36 +37,6 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* fi
 		char ch = result;
 		buf_push(memory_buffer, &ch);
 	}
-	fclose(file);
-	if(buf_get_element_count(memory_buffer) > 0)
-	{
-		/* if null character is not appended at the end, add it explicitly */
-		char ch;
-		buf_peek(memory_buffer, &ch);
-		if(ch != 0)
-		{
-			ch = 0;
-			buf_push(memory_buffer, &ch);
-		}
-	}
-	buf_fit(memory_buffer);
-	CALLTRACE_RETURN(memory_buffer);
-}
-
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name)
-{
-	CALLTRACE_BEGIN();
-	FILE* file = fopen(file_name, "r");
-	if(file == NULL)
-		CALLTRACE_RETURN(NULL);
-	BUFFER* memory_buffer = BUFcreate(NULL, sizeof(char), 0, 0);
-	int result;
-	while((result = getc(file)) != EOF)
-	{
-		char ch = result;
-		buf_push(memory_buffer, &ch);
-	}
-	fclose(file);
 	if(buf_get_element_count(memory_buffer) > 0)
 	{
 		/* if null character is not appended at the end, add it explicitly */
@@ -90,6 +54,27 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* 
 		buf_free(memory_buffer);
 		memory_buffer = NULL;
 	}
+	return memory_buffer;
+}
+
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name)
+{
+	CALLTRACE_BEGIN();
+	FILE* file = fopen(file_name, "r");
+	if(file == NULL)
+		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
+	BUFFER* memory_buffer = read_text_from_file_ptr(file);
+	fclose(file);
+	CALLTRACE_RETURN(memory_buffer);
+}
+
+DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name)
+{
+	CALLTRACE_BEGIN();
+	FILE* file = fopen(file_name, "r");
+	if(file == NULL)
+		CALLTRACE_RETURN(NULL);
+	BUFFER* memory_buffer = read_text_from_file_ptr(file);
 	CALLTRACE_RETURN(memory_buffer);
 }
 
