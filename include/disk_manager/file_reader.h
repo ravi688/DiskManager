@@ -10,7 +10,7 @@
 // for DISK_MANAGER_API
 #include <disk_manager/defines.h>
 
-#ifdef __cpluscplus
+#ifdef __cplusplus
 extern "C" {
 #endif
 
@@ -77,6 +77,6 @@ DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* 
 DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name);
 #define load_text_from_file_exclude_comments(...) define_alias_function_macro(load_text_from_file_exclude_comments, __VA_ARGS__)
 
-#ifdef __cpluscplus
+#ifdef __cplusplus
 }
 #endif
