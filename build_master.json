@@ -1,0 +1,37 @@
+{
+    "project_name" : "DiskManager",
+    "canonical_name" : "diskmanager",
+    "description" : "File Read and Write Library",
+    "dependencies" : [ "calltrace", "bufferlib" ],
+    "release_defines": [ "-DDISK_MANAGER_RELEASE" ],
+    "debug_defines": [ "-DDISK_MANAGER_DEBUG" ],
+    "install_header_dirs" : [ "include/disk_manager" ],
+    "include_dirs" : [ "include" ],
+    "targets" :
+    [
+        {
+            "name" : "diskmanager_static",
+            "is_static_library" : true,
+            "description" : "Static Library for Disk Manager",
+            "build_defines" : [ "-DDISK_MANAGER_BUILD_STATIC_LIBRARY" ],
+            "use_defines" : [ "-DDISK_MANAGER_USE_STATIC_LIBRARY" ]
+        }, 
+        {
+            "name" : "diskmanager_shared",
+            "is_shared_library" : true,
+            "description" : "Shared Library for Disk Manager",
+            "build_defines" : [ "-DDISK_MANAGER_BUILD_SHARED_LIBRARY" ],
+            "use_defines" : [ "-DDISK_MANAGER_USE_SHARED_LIBRARY" ]
+        },
+        {
+            "name" : "main",
+            "is_executable" : true,
+            "sources" : [ "source/main.c" ]
+        }
+    ],
+    "sources" :
+    [
+        "source/file_reader.c",
+        "source/file_writer.c"
+    ]
+}
