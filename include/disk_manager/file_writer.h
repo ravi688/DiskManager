@@ -1,8 +1,6 @@
 
 #pragma once
 
-//for stack trace
-#include <calltrace/calltrace.h>
 //for u64 and DISK_MANAGER_API
 #include <disk_manager/defines.h>
 
@@ -29,8 +27,7 @@ extern "C" {
  * 		const char* string = "Hello World";
  *		write_text_to_file("myFolder/file.txt", string);
  */
-DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_name, const char* text);
-#define write_text_to_file(...) define_alias_function_macro(write_text_to_file, __VA_ARGS__)
+DISK_MANAGER_API void write_text_to_file(const char* file_name, const char* text);
 
 /* write_binary_to_file(const char* file_name, const char* data, u64 length)
  * PARAMS:
@@ -50,8 +47,7 @@ DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_n
  * 		int data[100]; memset(data, 0, sizeof(int) * 100);
  * 		write_binary_to_file("myFolder/binaryFile.bin", data, sizeof(int) * 100);
  */
-DISK_MANAGER_API function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length); 
-#define write_binary_to_file(...) define_alias_function_macro(write_binary_to_file, __VA_ARGS__)
+DISK_MANAGER_API void write_binary_to_file(const char* file_name, const char* data, u64 length); 
 
 
 #ifdef __cplusplus

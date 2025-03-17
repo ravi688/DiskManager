@@ -83,7 +83,6 @@ lib_install_dir_bm_internal__ = get_option('libdir')/'diskmanager'
 
 # Dependencies
 dependencies_bm_internal__ = [
-dependency('calltrace'),
 dependency('bufferlib')
 ]
 
@@ -118,15 +117,15 @@ add_project_link_arguments('-m64', link_args_bm_internal__, language : 'c')
 add_project_link_arguments('-m64', link_args_bm_internal__, language : 'cpp')
 
 # Build type specific defines
-build_mode_defines_bm_internal__ = defines_bm_internal__
+project_build_mode_defines_bm_internal__ = defines_bm_internal__
 if get_option('buildtype') == 'release'
   add_project_arguments(release_defines_bm_internal__, language : 'c')
   add_project_arguments(release_defines_bm_internal__, language : 'cpp')
-  build_mode_defines_bm_internal__ += release_defines_bm_internal__
+  project_build_mode_defines_bm_internal__ += release_defines_bm_internal__
 else
   add_project_arguments(debug_defines_bm_internal__, language : 'c')
   add_project_arguments(debug_defines_bm_internal__, language : 'cpp')
-  build_mode_defines_bm_internal__ += debug_defines_bm_internal__
+  project_build_mode_defines_bm_internal__ += debug_defines_bm_internal__
 endif
 
 # pkg-config package installation
@@ -192,22 +191,22 @@ diskmanager_static = static_library('diskmanager_static',
 	include_directories: [inc_bm_internal__, diskmanager_static_include_dirs_bm_internal__],
 	install: true,
 	install_dir: lib_install_dir_bm_internal__,
-	c_args: diskmanager_static_build_defines_bm_internal__,
-	cpp_args: diskmanager_static_build_defines_bm_internal__, 
+	c_args: diskmanager_static_build_defines_bm_internal__ + project_build_mode_defines_bm_internal__,
+	cpp_args: diskmanager_static_build_defines_bm_internal__ + project_build_mode_defines_bm_internal__, 
 	link_args: diskmanager_static_link_args_bm_internal__[host_machine.system()],
 	gnu_symbol_visibility: 'hidden'
 )
 diskmanager_static_dep = declare_dependency(
 	link_with: diskmanager_static,
 	include_directories: [inc_bm_internal__, diskmanager_static_include_dirs_bm_internal__],
-	compile_args: diskmanager_static_use_defines_bm_internal__ + build_mode_defines_bm_internal__
+	compile_args: diskmanager_static_use_defines_bm_internal__ + project_build_mode_defines_bm_internal__
 )
 pkgmod.generate(diskmanager_static,
 	name: 'DiskManager',
 	description: 'Static Library for Disk Manager',
 	filebase: 'diskmanager_static',
 	install_dir: pkgconfig_install_path_bm_internal__,
-	extra_cflags: diskmanager_static_use_defines_bm_internal__ + build_mode_defines_bm_internal__
+	extra_cflags: diskmanager_static_use_defines_bm_internal__ + project_build_mode_defines_bm_internal__
 )
 
 # -------------- Target: diskmanager_shared ------------------
@@ -237,22 +236,22 @@ diskmanager_shared = shared_library('diskmanager_shared',
 	include_directories: [inc_bm_internal__, diskmanager_shared_include_dirs_bm_internal__],
 	install: true,
 	install_dir: lib_install_dir_bm_internal__,
-	c_args: diskmanager_shared_build_defines_bm_internal__,
-	cpp_args: diskmanager_shared_build_defines_bm_internal__, 
+	c_args: diskmanager_shared_build_defines_bm_internal__ + project_build_mode_defines_bm_internal__,
+	cpp_args: diskmanager_shared_build_defines_bm_internal__ + project_build_mode_defines_bm_internal__, 
 	link_args: diskmanager_shared_link_args_bm_internal__[host_machine.system()],
 	gnu_symbol_visibility: 'hidden'
 )
 diskmanager_shared_dep = declare_dependency(
 	link_with: diskmanager_shared,
 	include_directories: [inc_bm_internal__, diskmanager_shared_include_dirs_bm_internal__],
-	compile_args: diskmanager_shared_use_defines_bm_internal__ + build_mode_defines_bm_internal__
+	compile_args: diskmanager_shared_use_defines_bm_internal__ + project_build_mode_defines_bm_internal__
 )
 pkgmod.generate(diskmanager_shared,
 	name: 'DiskManager',
 	description: 'Shared Library for Disk Manager',
 	filebase: 'diskmanager_shared',
 	install_dir: pkgconfig_install_path_bm_internal__,
-	extra_cflags: diskmanager_shared_use_defines_bm_internal__ + build_mode_defines_bm_internal__
+	extra_cflags: diskmanager_shared_use_defines_bm_internal__ + project_build_mode_defines_bm_internal__
 )
 
 # -------------- Target: main ------------------
@@ -278,8 +277,8 @@ main = executable('main',
 	dependencies: dependencies_bm_internal__ + main_dependencies_bm_internal__,
 	include_directories: [inc_bm_internal__, main_include_dirs_bm_internal__],
 	install: false,
-	c_args: main_defines_bm_internal__,
-	cpp_args: main_defines_bm_internal__, 
+	c_args: main_defines_bm_internal__ + project_build_mode_defines_bm_internal__,
+	cpp_args: main_defines_bm_internal__ + project_build_mode_defines_bm_internal__, 
 	link_args: main_link_args_bm_internal__[host_machine.system()],
 	gnu_symbol_visibility: 'hidden'
 )
@@ -289,4 +288,5 @@ main = executable('main',
 #--------------------------------Header Intallation----------------------------------
 # Header installation
 install_subdir('include/disk_manager', install_dir : get_option('includedir'))
+
 
