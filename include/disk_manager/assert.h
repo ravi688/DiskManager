@@ -9,9 +9,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-//for log_msg, log_err, log_fetal_err and calltrace_string()
-#include <calltrace/calltrace.h>
-
 #ifdef ASSERT
 #	undef ASSERT
 #endif
@@ -24,7 +21,6 @@
 		{\
 			printf("Assertion Failed: ");\
 			printf(__VA_ARGS__);\
-			puts(calltrace_string());\
 			exit(0);\
 		}\
 	} while(0)
@@ -32,11 +28,6 @@
 #	define ASSERT(boolean, ...)
 #endif
 
-#if defined(GLOBAL_DEBUG)
-#	define LOG_MSG(...) log_msg(__VA_ARGS__)
-#	define LOG_ERR(...) log_err(__VA_ARGS__)
-#	define LOG_FETAL_ERR(...) log_fetal_err(__VA_ARGS__)
-#else
 #	define LOG_MSG(...)\
 	{\
 		printf("[Log]: ");\
@@ -53,4 +44,3 @@
 		printf(__VA_ARGS__);\
 		exit(0);\
 	}
-#endif

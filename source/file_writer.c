@@ -7,9 +7,8 @@
 //for fopen, fclose, putc, and fwrite
 #include <stdio.h>
 
-DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_name, const char* text)
+DISK_MANAGER_API void write_text_to_file(const char* file_name, const char* text)
 {
-	CALLTRACE_BEGIN();
 	if(text == NULL)
 	{
 		LOG_FETAL_ERR("Nothing to write to file \"%s\", text data is NULL\n", file_name);
@@ -25,13 +24,11 @@ DISK_MANAGER_API function_signature(void, write_text_to_file, const char* file_n
 		++text;
 	}
 	fclose(file);
-	CALLTRACE_END();
 }
 
 
-DISK_MANAGER_API function_signature(void, write_binary_to_file, const char* file_name, const char* data, u64 length)
+DISK_MANAGER_API void write_binary_to_file(const char* file_name, const char* data, u64 length)
 {
-	CALLTRACE_BEGIN();
 	if(data == NULL)
 	{
 		LOG_FETAL_ERR("Nothing to write to file \"%s\", data is NULL\n", file_name);
@@ -47,5 +44,4 @@ DISK_MANAGER_API function_signature(void, write_binary_to_file, const char* file
 		LOG_FETAL_ERR("Writing to file \"%s\" failed\n", file_name);
 	}
 	fclose(file);
-	CALLTRACE_END();
 }

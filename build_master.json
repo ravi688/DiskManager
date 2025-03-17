@@ -2,7 +2,7 @@
     "project_name" : "DiskManager",
     "canonical_name" : "diskmanager",
     "description" : "File Read and Write Library",
-    "dependencies" : [ "calltrace", "bufferlib" ],
+    "dependencies" : [ "bufferlib" ],
     "release_defines": [ "-DDISK_MANAGER_RELEASE" ],
     "debug_defines": [ "-DDISK_MANAGER_DEBUG" ],
     "install_header_dirs" : [ "include/disk_manager" ],

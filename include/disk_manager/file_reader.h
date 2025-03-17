@@ -1,9 +1,6 @@
 
 #pragma once
 
-//For stack trace
-#include <calltrace/calltrace.h>
-
 //For BUFFER* 
 #include <bufferlib/buffer.h>
 
@@ -33,11 +30,9 @@ extern "C" {
  *		puts(file_data->bytes) or puts(buf_get_ptr())
  * 		buf_free(file_data);
  */
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name);
-#define load_text_from_file(...) define_alias_function_macro(load_text_from_file, __VA_ARGS__)
+DISK_MANAGER_API BUFFER* load_text_from_file(const char* file_name);
 
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name);
-#define load_text_from_file_s(...) define_alias_function_macro(load_text_from_file_s, __VA_ARGS__)
+DISK_MANAGER_API BUFFER* load_text_from_file_s(const char* file_name);
 
 /* load_binary_from_file(const char* file_name):
  * PARAMS:
@@ -58,8 +53,7 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* 
  *		stl_parse_binary(file_data->bytes, file_data->element_size, &callbacks);
  *		buf_free(file_data);
  */
-DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* file_name); 
-#define load_binary_from_file(...) define_alias_function_macro(load_binary_from_file, __VA_ARGS__)
+DISK_MANAGER_API BUFFER* load_binary_from_file(const char* file_name); 
 
 /* load_text_file_exclude_comments(const char* file_name)
  * PARAMS:
@@ -74,8 +68,7 @@ DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* 
  * 		1. It is guaranteed that the loaded text data would be null terminated.
  * 		2. SHOULD NOT BE USED, because it is not well tested
  */
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name);
-#define load_text_from_file_exclude_comments(...) define_alias_function_macro(load_text_from_file_exclude_comments, __VA_ARGS__)
+DISK_MANAGER_API BUFFER* load_text_from_file_exclude_comments(const char* file_name);
 
 #ifdef __cplusplus
 }

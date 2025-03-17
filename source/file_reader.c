@@ -7,9 +7,8 @@
 //For getc, fread, fseek, ftell, rewind, and fclose
 #include <stdio.h>
 
-DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* file_name)
+DISK_MANAGER_API BUFFER* load_binary_from_file(const char* file_name)
 {
-	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "rb");
 	if(file == NULL)
 	{
@@ -25,7 +24,7 @@ DISK_MANAGER_API function_signature(BUFFER*, load_binary_from_file, const char* 
 	buf_set_element_count(memory_buffer, read_length);
 	fclose(file);
 	buf_fit(memory_buffer);
-	CALLTRACE_RETURN(memory_buffer);
+	return memory_buffer;
 }
 
 static BUFFER* read_text_from_file_ptr(FILE* file)
@@ -57,30 +56,27 @@ static BUFFER* read_text_from_file_ptr(FILE* file)
 	return memory_buffer;
 }
 
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file, const char* file_name)
+DISK_MANAGER_API BUFFER* load_text_from_file(const char* file_name)
 {
-	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "r");
 	if(file == NULL)
 		LOG_FETAL_ERR("File \"%s\" loading failed\n", file_name);
 	BUFFER* memory_buffer = read_text_from_file_ptr(file);
 	fclose(file);
-	CALLTRACE_RETURN(memory_buffer);
+	return memory_buffer;
 }
 
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_s, const char* file_name)
+DISK_MANAGER_API BUFFER* load_text_from_file_s(const char* file_name)
 {
-	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "r");
 	if(file == NULL)
-		CALLTRACE_RETURN(NULL);
+		return NULL;
 	BUFFER* memory_buffer = read_text_from_file_ptr(file);
-	CALLTRACE_RETURN(memory_buffer);
+	return memory_buffer;
 }
 
-DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comments, const char* file_name)
+DISK_MANAGER_API BUFFER* load_text_from_file_exclude_comments(const char* file_name)
 {
-	CALLTRACE_BEGIN();
 	FILE* file = fopen(file_name, "r"); 
 	if(file == NULL)
 	{
@@ -133,5 +129,5 @@ DISK_MANAGER_API function_signature(BUFFER*, load_text_from_file_exclude_comment
 	char null_value = 0;
 	buf_push(memory_buffer, &null_value); 
 	buf_fit(memory_buffer); 
-	CALLTRACE_RETURN(memory_buffer);
+	return memory_buffer;
 }
